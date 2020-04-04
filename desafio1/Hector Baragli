@@ -1,0 +1,31 @@
+let data = require('./data');
+
+let primerreemplazo = data.replace("<ul>", "");
+let segundoreemplazo = primerreemplazo.replace("</ul>", "");
+let nuevoarray = segundoreemplazo.split("</li>");
+
+let arrayfinal = []
+
+for (let index = 0; index < nuevoarray.length; index++) {
+   const element = nuevoarray[index];
+   let miobjeto = new Object();
+   miobjeto.nombre = element.split('"')[2];
+   miobjeto.tiempo = element.split('"')[1];
+   arrayfinal.push(miobjeto);
+
+}
+
+let tiempototalvideo = 0;
+
+for (let index = 0; index < arrayfinal.length; index++) {
+   const element = arrayfinal[index];
+   if (element.nombre === '>Flexbox Video') {
+      let tiempovideo = element.tiempo;
+      let partes = tiempovideo.split(":");
+      let totalsegundos = parseInt(partes[0]) * 60 + parseInt(partes[1]);
+      tiempototalvideo += totalsegundos;
+   }
+
+}
+
+console.log("El total en segundos del tiempo de video Flexbox es de: " + tiempototalvideo);
