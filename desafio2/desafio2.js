@@ -17,7 +17,7 @@ const nuevoInventor = {
 
     async function CrearInventor(inventor){
         try{
-
+            const client = new mongoclient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
             let conexion = await client.connect();
             let inventores = conexion.db("desafio2").collection("inventors");
             await inventores.insertOne(inventor)
@@ -32,7 +32,7 @@ const nuevoInventor = {
     //Leer Inventor
     async function LeerInventor(apellido){
         try{
-
+            const client = new mongoclient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
             let conexion = await client.connect();
             let inventores = conexion.db("desafio2").collection("inventors");
             let auxiliar = await inventores.find({last: apellido }).toArray();
@@ -49,7 +49,7 @@ const nuevoInventor = {
 
     async function ActualizarInventor(apellido, nuevoapellido){
         try{
-
+            const client = new mongoclient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
             let conexion = await client.connect();
             let inventores = conexion.db("desafio2").collection("inventors");
             await inventores.updateOne({last: apellido}, {$set: {last: nuevoapellido}});
@@ -65,7 +65,7 @@ const nuevoInventor = {
    
     async function EliminarInventor(apellido){
         try{
-
+            const client = new mongoclient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
             let conexion = await client.connect();
             let inventores = conexion.db("desafio2").collection("inventors");
             await inventores.deleteOne({last: apellido});
@@ -76,9 +76,15 @@ const nuevoInventor = {
         }
     }
    
-   
 
-    CrearInventor(nuevoInventor)
-    LeerInventor("Einstein")
-    ActualizarInventor("Newton", "Asimov")
-    EliminarInventor("Da Vinci")
+    async function Ejecutar(){
+            await LeerInventor("Einstein");
+            await CrearInventor(nuevoInventor);
+            await ActualizarInventor("Newton", "Asimov");
+            await EliminarInventor("Da Vinci");
+        } 
+          
+
+
+Ejecutar();
+    
